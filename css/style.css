@@ -1,0 +1,643 @@
+/* --- VARIABLES & THEMES --- */
+:root {
+    --bg-color: #0d0d0d;
+    --text-color: #fff;
+    --accent-color: #ffb7b2;
+    --secondary-accent: #e2f0cb;
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Outfit', sans-serif;
+    --mood-transition: 0.8s ease-in-out;
+}
+
+[data-mood="playful"] {
+    --bg-color: #1a1a2e;
+    --text-color: #e94560;
+    --accent-color: #0f3460;
+    --secondary-accent: #16213e;
+    /* Soft pastel gradient base */
+    --bg-gradient: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+}
+
+[data-mood="romantic"] {
+    --bg-color: #2c0e18;
+    --text-color: #ffffff;
+    --accent-color: #ffccd5;
+    --secondary-accent: #c9184a;
+    --bg-gradient: linear-gradient(to bottom, #2c0e18, #590d22);
+}
+
+[data-mood="soft"] {
+    --bg-color: #f7f3e8;
+    --text-color: #4a4a4a;
+    --accent-color: #d4a373;
+    --secondary-accent: #faedcd;
+    --bg-gradient: linear-gradient(to bottom, #f7f3e8, #faedcd);
+}
+
+/* --- RESET & BASE --- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-body);
+    background: var(--bg-color);
+    color: var(--text-color);
+    transition: background var(--mood-transition), color var(--mood-transition);
+    overflow-x: hidden;
+    min-height: 100vh;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+}
+
+button {
+    cursor: pointer;
+    font-family: var(--font-body);
+    border: none;
+    outline: none;
+}
+
+.hidden {
+    display: none !important;
+    opacity: 0;
+    pointer-events: none;
+}
+
+/* --- SCENE BASICS --- */
+.scene {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 2rem;
+    overflow: hidden;
+}
+
+.content-wrapper {
+    text-align: center;
+    z-index: 10;
+    max-width: 600px;
+    width: 100%;
+}
+
+/* --- SCENE 1: OPENING GATE --- */
+#opening-gate {
+    background: #000;
+    /* Always start dark */
+}
+
+.typewriter {
+    font-size: 2rem;
+    font-weight: 400;
+    color: #fff;
+    min-height: 3rem;
+    margin-bottom: 2rem;
+}
+
+.button-group {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: center;
+    opacity: 0;
+    animation: fadeIn 1s forwards;
+}
+
+.btn-primary,
+.btn-secondary {
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    font-size: 1.1rem;
+    transition: transform 0.2s;
+}
+
+.btn-primary {
+    background: #fff;
+    color: #000;
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 1px solid #fff;
+    color: #fff;
+}
+
+.btn-primary:hover,
+.btn-secondary:hover {
+    transform: scale(1.05);
+}
+
+/* --- SCENE 2: PLAYFUL INTRO --- */
+#playful-intro {
+    background: var(--bg-gradient);
+}
+
+.intro-text {
+    font-size: 1.5rem;
+    line-height: 1.6;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInUp 1s forwards 0.5s;
+}
+
+.scroll-indicator {
+    font-size: 2rem;
+    animation: bounce 2s infinite;
+}
+
+/* --- SCENE 3: INTERACTIVE MEMORY FLOW --- */
+#memory-flow {
+    display: block;
+    /* Custom scrolling flow needed */
+    padding: 4rem 1rem;
+    background: var(--bg-gradient);
+    min-height: auto;
+    /* Let content dictate height */
+}
+
+.memory-container {
+    position: relative;
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 4rem;
+    /* Big spacing for floating feel */
+}
+
+.memory-item {
+    width: 250px;
+    /* Base size */
+    height: 350px;
+    position: relative;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease, filter 0.3s ease;
+    cursor: pointer;
+    background-color: rgba(255, 255, 255, 0.05);
+    /* Placeholder */
+}
+
+.memory-item.landscape {
+    width: 350px;
+    height: 250px;
+}
+
+.memory-item img,
+.memory-item video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Float Animation offsets will be added via JS or nth-child */
+.memory-item:nth-child(2n) {
+    margin-top: 5rem;
+}
+
+.memory-item:nth-child(3n) {
+    margin-top: -2rem;
+}
+
+/* Lock Styling */
+.memory-item.locked {
+    filter: blur(8px) grayscale(80%);
+}
+
+.lock-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 5;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 0.3s;
+}
+
+.lock-icon {
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+}
+
+.memory-item.unlocked {
+    filter: blur(0) grayscale(0);
+}
+
+.memory-item:hover {
+    transform: translateY(-5px) scale(1.02);
+}
+
+/* --- MOOD SELECTOR --- */
+.mood-floater {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 0.5rem 1rem;
+    border-radius: 30px;
+    display: flex;
+    gap: 1rem;
+    z-index: 100;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    transition: opacity 0.5s;
+}
+
+.mood-btn {
+    background: transparent;
+    font-size: 1.5rem;
+    opacity: 0.5;
+    transition: opacity 0.3s, transform 0.3s;
+}
+
+.mood-btn.active,
+.mood-btn:hover {
+    opacity: 1;
+    transform: scale(1.2);
+}
+
+/* --- SCENE 6: CINEMATIC VIDEO ROOM --- */
+#video-room {
+    background: #000;
+    color: #fff;
+}
+
+.video-container {
+    width: 100%;
+    max-width: 800px;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 50px rgba(255, 255, 255, 0.1);
+    margin-top: 2rem;
+}
+
+.video-container video {
+    width: 100%;
+    display: block;
+}
+
+/* --- SCENE 7: FLOATING ORBS --- */
+#compliment-orbs {
+    background: var(--bg-gradient);
+    height: 100vh;
+}
+
+.orbs-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.orb {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(circle at 30% 30%, rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.2));
+    box-shadow: 0 0 20px var(--accent-color);
+    cursor: pointer;
+    transition: transform 0.3s;
+    animation: floatOrb 10s infinite ease-in-out;
+}
+
+.orb:hover {
+    transform: scale(1.2);
+}
+
+.orb-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.6);
+    padding: 2rem;
+    border-radius: 15px;
+    color: #fff;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+
+.orb-message.show {
+    opacity: 1;
+}
+
+/* --- SCENE 8: FINAL CONFESSION --- */
+#final-confession {
+    background: #000;
+    color: #fff;
+}
+
+.final-text {
+    font-size: 1.8rem;
+    font-weight: 300;
+    margin-bottom: 2rem;
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+.confession-highlight {
+    font-size: 2.2rem;
+    font-family: var(--font-heading);
+    color: var(--accent-color);
+    margin-bottom: 3rem;
+}
+
+.final-reveal {
+    opacity: 0;
+    transition: opacity 2s;
+}
+
+/* --- MODAL --- */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.9);
+    z-index: 200;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 90%;
+    text-align: center;
+}
+
+.modal-content img,
+.modal-content video {
+    max-width: 100%;
+    max-height: 80vh;
+    border-radius: 8px;
+}
+
+.caption {
+    margin-top: 1rem;
+    color: #fff;
+    font-size: 1.2rem;
+}
+
+.close-modal {
+    position: absolute;
+    top: 20px;
+    right: 30px;
+    font-size: 3rem;
+    color: #fff;
+    background: none;
+}
+
+/* --- ANIMATIONS --- */
+@keyframes fadeIn {
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes bounce {
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
+}
+
+@keyframes floatOrb {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    50% {
+        transform: translate(20px, -30px);
+    }
+
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+.fade-in {
+    opacity: 1 !important;
+    transition: opacity 2s;
+}
+
+.fade-out {
+    opacity: 0 !important;
+    transition: opacity 1s;
+}
+
+/* --- GRAND ENHANCEMENTS --- */
+
+/* Typography Boost */
+.section-title {
+    font-size: 3rem;
+    margin-bottom: 2rem;
+    text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 1s, transform 1s;
+}
+
+.section-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Rain Effect */
+.rain-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 50;
+    overflow: hidden;
+}
+
+.rain-heart {
+    position: absolute;
+    top: -50px;
+    font-size: 1.5rem;
+    animation: rainFall linear forwards;
+}
+
+@keyframes rainFall {
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+    }
+
+    100% {
+        transform: translateY(110vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+/* Heartbeat Button */
+.heartbeat-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    font-size: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    z-index: 99;
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+    animation: pulseHeart 2s infinite;
+    transition: transform 0.2s;
+}
+
+.heartbeat-btn:active {
+    transform: scale(0.9);
+}
+
+@keyframes pulseHeart {
+    0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(233, 69, 96, 0.7);
+    }
+
+    70% {
+        transform: scale(1.1);
+        box-shadow: 0 0 0 10px rgba(233, 69, 96, 0);
+    }
+
+    100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(233, 69, 96, 0);
+    }
+}
+
+/* Reasons Grid (Flip Cards) */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 2rem;
+    width: 100%;
+    max-width: 800px;
+}
+
+.flip-card {
+    background-color: transparent;
+    width: 100%;
+    height: 200px;
+    perspective: 1000px;
+    opacity: 0;
+    /* Staggered reveal */
+    transform: translateY(20px);
+}
+
+.flip-card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    border-radius: 15px;
+}
+
+.flip-card.flipped .flip-card-inner {
+    transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+}
+
+.flip-card-front {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.flip-card-back {
+    background: var(--bg-gradient);
+    /* Match theme */
+    color: #fff;
+    transform: rotateY(180deg);
+    border: 1px solid var(--accent-color);
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+/* Parallax Layer Styles */
+.parallax-layer {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    pointer-events: none;
+    background-image: radial-gradient(circle, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 50px 50px;
+    z-index: 0;
+}
