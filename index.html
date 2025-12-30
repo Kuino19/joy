@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>my favourite videos</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-mood="playful">
+
+    <!-- SCENE 1: OPENING GATE -->
+    <section id="opening-gate" class="scene active">
+        <div class="content-wrapper central-text">
+            <h1 id="typewriter-text" class="typewriter"></h1>
+            <div class="button-group hidden">
+                <button id="btn-play" class="btn-primary">▶ Press Play</button>
+                <button id="btn-curious" class="btn-secondary">💭 I’m Curious</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- MAIN CONTENT CONTAINER (Initially Hidden) -->
+    <main id="main-content" class="hidden">
+
+        <!-- SCENE 2: PLAYFUL INTRO -->
+        <section id="playful-intro" class="scene">
+            <div class="particles" id="particles-js"></div>
+            <div class="content-wrapper fade-in-up">
+                <p class="intro-text">This isn’t random. It’s just me… being a little brave.</p>
+                <div class="scroll-indicator">
+                    <span>↓</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 3: INTERACTIVE MEMORY FLOW -->
+        <section id="memory-flow" class="scene">
+            <div class="memory-container" id="memory-container">
+                <!-- Memories will be injected here via JS -->
+            </div>
+        </section>
+
+        <!-- SCENE 4: MEMORY LOCKS (Integrated into flow but logic handled separately) -->
+
+        <!-- SCENE 5: MOOD SELECTOR (Already here) -->
+        <div id="mood-selector" class="mood-floater bottom-up-reveal">
+            <button class="mood-btn active" data-mood="playful" title="Playful">😄</button>
+            <button class="mood-btn" data-mood="romantic" title="Romantic">💖</button>
+            <button class="mood-btn" data-mood="soft" title="Soft">😌</button>
+        </div>
+
+        <!-- NEW SCENE: OPEN WHEN ENVELOPES -->
+        <section id="open-when" class="scene">
+            <div class="content-wrapper">
+                <h2 class="section-title">Open When...</h2>
+                <div class="envelopes-container">
+                    <div class="envelope" data-content="Miss Me">
+                        <div class="flap"></div>
+                        <div class="pocket"></div>
+                        <div class="letter">
+                            <p>Call me. I'm always here for you.</p>
+                        </div>
+                        <div class="envelope-label">You Miss Me</div>
+                    </div>
+                    <div class="envelope" data-content="Sad">
+                        <div class="flap"></div>
+                        <div class="pocket"></div>
+                        <div class="letter">
+                            <p>You are stronger than you think. And you are loved.</p>
+                        </div>
+                        <div class="envelope-label">You're Sad</div>
+                    </div>
+                    <div class="envelope" data-content="Happy">
+                        <div class="flap"></div>
+                        <div class="pocket"></div>
+                        <div class="letter">
+                            <p>Your smile is my favorite thing in the world. Keep shining.</p>
+                        </div>
+                        <div class="envelope-label">You're Happy</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- NEW SCENE: WHY I LOVE YOU GRID -->
+        <section id="reasons-grid" class="scene">
+            <div class="content-wrapper">
+                <h2 class="section-title">Why You?</h2>
+                <div class="grid-container" id="reasons-container">
+                    <!-- Cards injected via JS -->
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 6: CINEMATIC VIDEO ROOM -->
+        <section id="video-room" class="scene">
+            <div class="content-wrapper">
+                <p class="video-intro text-fade">This is where I stopped pretending I didn’t feel it.</p>
+                <div class="video-container">
+                    <video id="feature-video" controls playsinline poster="image/new.jpg">
+                        <source src="" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            </div>
+        </section>
+
+        <!-- SCENE 7: FLOATING COMPLIMENT ORBS -->
+        <section id="compliment-orbs" class="scene">
+            <div class="orbs-container" id="orbs-container">
+                <!-- Orbs injected via JS -->
+            </div>
+            <div id="orb-message" class="orb-message hidden"></div>
+        </section>
+
+        <!-- SCENE 8: FINAL CONFESSION -->
+        <section id="final-confession" class="scene">
+            <div class="content-wrapper central-text">
+                <p class="final-text alpha hidden">I didn’t build this to impress you.</p>
+                <p class="final-text beta hidden">I built it because you already did.</p>
+                <div class="final-reveal hidden">
+                    <p class="confession-highlight">I like us. I want to choose you — intentionally.</p>
+                    <div class="final-buttons">
+                        <a href="sms:?body=Let's talk" class="btn-primary">💬 Let’s talk</a>
+                        <button id="btn-hug" class="btn-secondary">🤍 Hug me later</button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- MODAL FOR MEDIA -->
+    <div id="media-modal" class="modal hidden">
+        <button class="close-modal">&times;</button>
+        <div class="modal-content">
+            <img id="modal-img" src="" alt="Memory" class="hidden">
+            <video id="modal-video" controls playsinline class="hidden">
+                <source src="" type="video/mp4">
+            </video>
+            <p id="modal-caption" class="caption"></p>
+        </div>
+    </div>
+
+    <!-- RAIN CONTAINER -->
+    <div id="love-rain-container" class="rain-container"></div>
+
+    <!-- FLOATING HEART BUTTON -->
+    <button id="heartbeat-btn" class="heartbeat-btn" title="Send Love">💓</button>
+
+    <!-- MAGIC CURSOR -->
+    <div id="custom-cursor" class="custom-cursor"></div>
+
+    <!-- AUDIO PLAYER -->
+    <audio id="bg-music" loop>
+        <source src="" type="audio/mp3">
+    </audio>
+
+    <!-- MUSIC CONTROL BUTTON -->
+    <button id="music-btn" class="music-btn disconnected" title="Play Music">🎵</button>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>
